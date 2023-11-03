@@ -104,6 +104,6 @@ listedir.sh ---> a faire
 
 LISTE DES UTILISATEURS
 
-Le problème est que cela nous donne, absolument tous le fichier et toutes les informations, nous souhaitons cependant tout trier. /br
-Voici la solution avec cut : for user in $(cut  -d: -f1,3 /etc/passwd); do echo $user; done /br
-Voici la solution avec awk : for user in $(awk -F: '$3 > 100 {print $1 $3}' /etc/passwd); do echo $user; done
+Le problème est que cela nous donne, absolument tous le fichier et toutes les informations, nous souhaitons cependant tout trier. </br>
+Voici la solution avec cut : "for user in $(cut  -d: -f1,3 /etc/passwd); do echo $user; done" </br>
+Voici la solution avec awk : "for user in $(awk -F: '$3 > 100 {print $1 $3}' /etc/passwd); do echo $user; done"
