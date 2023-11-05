@@ -100,10 +100,117 @@ echo "Le fichier $file est un $type, qui $lecture $executable $ecriture, accessi
 
 
 
-listedir.sh ---> a faire
+						listedir.sh
 
-LISTE DES UTILISATEURS
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0"
+    exit 1
+fi
+
+folder="$1"
+
+echo "Sub folder in $folder :"
+for sous_repertoire in "$folder"/*; do
+    if [ -d "$subFolder" ]; then
+        echo "    $subFolder"
+    fi
+done
+
+
+						LISTE DES UTILISATEURS
 
 Le problème est que cela nous donne, absolument tous le fichier et toutes les informations, nous souhaitons cependant tout trier. </br>
 Voici la solution avec cut : "for user in $(cut  -d: -f1,3 /etc/passwd); do echo $user; done" </br>
 Voici la solution avec awk : "for user in $(awk -F: '$3 > 100 {print $1 $3}' /etc/passwd); do echo $user; done"
+
+
+						doesExist.sh
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0"
+    exit 1
+fi
+
+input="$1"
+
+if [[ "$input" =~ ^[0-9]+$ ]]; then
+    userUid="$input"
+else
+    userUid=$(id -u "$input" 2>/dev/null)
+fi
+
+if [ -n "$userUid" ]; then
+    echo "L'UID de l'utilisateur $input est : $userUid"
+fi
+
+						createUser.sh
+
+
+#!/bin/bash
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "You have to be a root user"
+    exit 1
+fi
+
+checkUseExistence() {
+    local username="$1"
+    id "$username" &>/dev/null
+}
+
+read -p "Login: " login
+
+if check_user_existence "$login"; then
+    echo "$login existe déjà."
+    exit 1
+fi
+
+read -p "Nom : " nom
+read -p "Prénom : " prenom
+read -p "UID : " uid
+read -p "GID : " gid
+read -p "Commentaires : " commentaire
+
+homeDir="/home/$login"
+if [ -d "$homeDir" ]; then
+    echo "$homeDir existe déjà."
+    exit 1
+fi
+
+useradd -c "$commentaire" -d "$homeDir" -u "$uid" -g "$gid" "$login"
+
+echo "Le compte utilisateur $login a été créé avec succès dans $homeDir."
+
+
+						note.sh
+
+#!/bin/bash
+
+while true; do
+    read -p "Saisissez une note (ou 'q' pour quitter) : " note
+
+    if [ "$note" == "q" ]; then
+        echo "Au revoir !"
+        exit 0
+    fi
+
+    if ((note >= 16 && note <= 20)); then
+        echo "Très bien"
+    elif ((note >= 14 && note < 16)); then
+        echo "Bien"
+    elif ((note >= 12 && note < 14)); then
+        echo "Assez bien"
+    elif ((note >= 10 && note < 12)); then
+        echo "Moyen"
+    elif ((note < 10)); then
+        echo "Insuffisant"
+    else
+        echo "Note non valide. Veuillez saisir une note entre 0 et 20."
+    fi
+done
+
+
+						
