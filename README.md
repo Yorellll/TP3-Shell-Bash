@@ -36,7 +36,7 @@ fi
 
 final=$1$2
 
-echo "Les 2 paramètres concaténé donnent : $final"
+echo "Les 2 paramètres concaténés donnent : $final"
 
 
 
