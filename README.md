@@ -1,3 +1,5 @@
+⚠️CE PROJET A ÉTÉ RÉALISÉ DANS UN CADRE UNIVERSITAIRE. IL A ÉTÉ DÉPOSÉ SUR CE GIT POUR CORRECTION, LE CODE PEUT DONC CONTENIR DES ERREURS⚠️
+
 # TP3-Shell-Bash
 
                                      analyse.sh                                                
